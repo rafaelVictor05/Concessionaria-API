@@ -1,5 +1,5 @@
 {
-  "name": "ApiConcessionaria",
+  "name": "api-concessionaria",
   "version": "1.0.0",
   "description": "API REST para gerenciamento de ordens de serviço de uma concessionária.",
   "main": "server.js",
