@@ -43,14 +43,91 @@ API REST para gerenciamento de ordens de serviço de uma concessionária de veí
 
 A API estará disponível em `http://localhost:3001/api`.
 
-## Endpoints Principais
+## Endpoints e Documentação
 
-- `POST   /api/concessionarias` — Cadastrar concessionária
-- `POST   /api/clientes` — Cadastrar cliente
-- `POST   /api/veiculos` — Cadastrar veículo
-- `POST   /api/ordens-servico` — Abrir ordem de serviço
-- `GET    /api/ordens-servico` — Listar ordens de serviço
-- `PUT    /api/ordens-servico/:id/fechar` — Fechar ordem de serviço
+### 1. Cadastrar Concessionária
+- **POST** `/api/concessionarias`
+- **Body JSON:**
+  ```json
+  {
+    "nome": "Concessionária X",
+    "cnpj": "12345678000199",
+    "endereco": "Rua Exemplo, 123"
+  }
+  ```
+- **Respostas:**
+  - 201: Dados da concessionária cadastrada
+  - 400: CNPJ já cadastrado
+  - 500: Erro interno
+
+### 2. Cadastrar Cliente
+- **POST** `/api/clientes`
+- **Body JSON:**
+  ```json
+  {
+    "nomeCompleto": "João Silva",
+    "cpf": "12345678901",
+    "telefone": "11999999999"
+  }
+  ```
+- **Respostas:**
+  - 201: Dados do cliente cadastrado
+  - 400: CPF já cadastrado
+  - 500: Erro interno
+
+### 3. Cadastrar Veículo
+- **POST** `/api/veiculos`
+- **Body JSON:**
+  ```json
+  {
+    "placa": "ABC1D23",
+    "chassi": "9BWZZZ377VT004251",
+    "modelo": "Gol",
+    "marca": "Volkswagen",
+    "ano": 2020,
+    "clienteId": "<id do cliente>"
+  }
+  ```
+- **Respostas:**
+  - 201: Dados do veículo cadastrado
+  - 400: Placa ou chassi já cadastrado
+  - 500: Erro interno
+
+### 4. Abrir Ordem de Serviço
+- **POST** `/api/ordens-servico`
+- **Body JSON:**
+  ```json
+  {
+    "clienteId": "<id do cliente>",
+    "veiculoId": "<id do veículo>",
+    "descricaoProblema": "Motor não liga"
+  }
+  ```
+- **Respostas:**
+  - 201: Dados da ordem de serviço aberta
+  - 500: Erro interno
+
+### 5. Listar Ordens de Serviço
+- **GET** `/api/ordens-servico`
+- **Respostas:**
+  - 200: Lista de ordens de serviço (com dados do cliente e veículo)
+  - 500: Erro interno
+
+### 6. Fechar Ordem de Serviço
+- **PUT** `/api/ordens-servico/:id/fechar`
+- **Parâmetro de rota:** `id` (ID da ordem de serviço)
+- **Body JSON:**
+  ```json
+  {
+    "servicosRealizados": "Troca de bateria",
+    "custoTotal": 350.00
+  }
+  ```
+- **Respostas:**
+  - 200: Ordem de serviço fechada com sucesso
+  - 400: Ordem já está fechada
+  - 404: Ordem não encontrada
+  - 500: Erro interno
 
 ## Estrutura de Pastas
 
@@ -61,5 +138,6 @@ A API estará disponível em `http://localhost:3001/api`.
   /models
   /routes
 ```
+
 
 
